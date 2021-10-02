@@ -1,5 +1,5 @@
 # Gas-Safety 
-Embedded system:
+Embedded system and IOT project:
 Component:
 •	Microcontroller PIC18F4620.
 •	GSM gprs A6 module.
