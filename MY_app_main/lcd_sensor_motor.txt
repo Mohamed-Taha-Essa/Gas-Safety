@@ -1,0 +1,89 @@
+/* 
+ * File:   project.c
+ * Author: moham
+ *
+ * Created on March 27, 2021, 12:05 PM
+ */
+/* section : includes */
+#include "project.h"
+uint16 adc_res1,adc_res2,adc_res3,adc_res4;
+
+const uint8 customChar1[] = {0x0E, 0x0A, 0x11, 0x11, 0x11, 0x11, 0x1F, 0x00};
+const uint8 customChar2[] = {0x0E, 0x0A, 0x11, 0x11, 0x11, 0x1F, 0x1F, 0x00};
+const uint8 customChar3[] = {0x0E, 0x0A, 0x11, 0x11, 0x1F, 0x1F, 0x1F, 0x00};
+const uint8 customChar4[] = {0x0E, 0x0A, 0x11, 0x1F, 0x1F, 0x1F, 0x1F, 0x00};
+const uint8 customChar5[] = {0x0E, 0x0A, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x00};
+const uint8 customChar6[] = {0x0E, 0x0E, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x00};
+uint16 str[];
+int main() {
+
+    std_ReturnType ret = E_NOT_Ok   ;
+    project_initialize();
+    while(1){
+       
+         ret = ADC_Get_Conversion_Blocking(&adc_1 , ADC_CHANNEL_0 , &adc_res1);
+        if(adc_res1 >= 500){
+            ret = dc_motor_stop(&dc_motor_2);
+            ret = dc_motor_stop(&dc_motor_1);
+
+            ret = dc_motor_move_right(&dc_motor_1);
+            ret = dc_motor_move_right(&dc_motor_2);
+        __delay_ms(5000);
+        }
+        else if(adc_res1 < 500 && adc_res1 > 100){
+            ret = dc_motor_stop(&dc_motor_2);
+            ret = dc_motor_stop(&dc_motor_1);
+                      
+
+            ret = dc_motor_move_left(&dc_motor_2);
+            ret = dc_motor_move_left(&dc_motor_1);
+                __delay_ms(5000);
+
+        }
+        else {
+            ret = dc_motor_stop(&dc_motor_2);
+            ret = dc_motor_stop(&dc_motor_1);
+        
+             }
+      
+           // ret = ADC_Get_Conversion_Blocking(&adc_1 ,ADC_CHANNEL_0 ,&adc_res1);
+           // ret = convert_uint16_to_string (adc_res1 ,str);
+           // ret = lcd_8bit_send_string_pos(&lcd_2 , 1 ,10,str);
+            //if(adc_res1 <500){
+                          //   ret = dc_motor_move_right(&dc_motor_1);
+                           //  __delay_ms(5000);
+
+           // }
+            // ret = ADC_Get_Conversion_Blocking(&adc_1 ,ADC_CHANNEL_1 ,&adc_res2);
+            //ret = convert_uint16_to_string (adc_res2 ,str);
+            //ret = lcd_4bit_send_string_pos(&lcd_1 , 1 ,10,str);
+    //ret = ADC_Get_Conversion_Blocking(&adc_1 ,ADC_CHANNEL_1 ,&adc_res2);
+
+       /*ret = lcd_8bit_send_custom_char(&lcd_2, 1, 20, customChar1, 0); 
+        ret = lcd_4bit_send_custom_char(&lcd_1, 1, 20, customChar2, 0); __delay_ms(200);
+        ret = lcd_8bit_send_custom_char(&lcd_2, 1, 20, customChar3, 0); 
+        ret = lcd_4bit_send_custom_char(&lcd_1, 1, 20, customChar4, 0); __delay_ms(200);
+        ret = lcd_8bit_send_custom_char(&lcd_2, 1, 20, customChar5, 0); 
+        ret = lcd_4bit_send_custom_char(&lcd_1, 1, 20, customChar6, 0); __delay_ms(200);
+        ret = lcd_8bit_send_custom_char(&lcd_2, 1, 20, customChar1, 0); 
+        ret = lcd_4bit_send_custom_char(&lcd_1, 1, 20, customChar2, 0); __delay_ms(200);
+        ret = lcd_8bit_send_custom_char(&lcd_2, 1, 20, customChar3, 0); 
+        ret = lcd_4bit_send_custom_char(&lcd_1, 1, 20, customChar4, 0); __delay_ms(200);
+        ret = lcd_8bit_send_custom_char(&lcd_2, 1, 20, customChar5, 0); 
+        ret = lcd_4bit_send_custom_char(&lcd_1, 1, 20, customChar6, 0); __delay_ms(200);
+        * */
+   
+    }
+        
+    return (EXIT_SUCCESS);
+}
+void project_initialize(void){
+    
+    std_ReturnType ret = E_NOT_Ok   ;
+   mcal_layer_initialize();
+   ecu_layer_initialize();
+ 
+}
+
+
+

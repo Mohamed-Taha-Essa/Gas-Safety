@@ -1,0 +1,65 @@
+/* 
+ * File:   project.c
+ * Author: moham
+ *
+ * Created on March 27, 2021, 12:05 PM
+ */
+/* section : includes */
+#include "project.h"
+
+
+segment_t seven_segment_1={
+  .segment_pins[0].Port =  PORTC_INDEX,
+   .segment_pins[0].direction = GPIO_DIRECTION_OUTPUT,
+  .segment_pins[0].logic =  GPIO_LOW,
+  .segment_pins[0].pin=  GPIO_PIN0,
+  
+   .segment_pins[1].Port =  PORTC_INDEX,
+  .segment_pins[1].direction = GPIO_DIRECTION_OUTPUT,
+  .segment_pins[1].logic =  GPIO_LOW,
+  .segment_pins[1].pin=  GPIO_PIN1,
+  
+   .segment_pins[2].Port =  PORTC_INDEX,
+  .segment_pins[2].direction = GPIO_DIRECTION_OUTPUT,
+  .segment_pins[2].logic =  GPIO_LOW,
+  .segment_pins[2].pin=  GPIO_PIN2,
+  
+   .segment_pins[3].Port =  PORTC_INDEX,
+  .segment_pins[3].direction = GPIO_DIRECTION_OUTPUT,
+  .segment_pins[3].logic =  GPIO_LOW,
+  .segment_pins[3].pin=  GPIO_PIN3,
+  
+  .segment_type = SEGMENT_COMMON_ANODE
+ 
+
+};
+
+
+/*
+ * 
+ */
+uint8 num = 0 ;
+int main() {
+
+    std_ReturnType ret = E_NOT_Ok   ;
+    project_initialize();
+    
+    while(1){
+        for(num = 0 ; num <9 ;num++)
+        {
+             ret =   seven_segment_write_number(&(seven_segment_1),num);
+             __delay_ms(500);
+        }
+     
+    }
+        
+
+    return (EXIT_SUCCESS);
+}
+void project_initialize(void){
+    
+    std_ReturnType ret = E_NOT_Ok   ;
+    ret = seven_segment_initialize(&(seven_segment_1));
+}
+
+

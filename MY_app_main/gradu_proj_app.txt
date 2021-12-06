@@ -1,0 +1,61 @@
+/* 
+ * File:   project.c
+ * Author: Mohamed Abdallah Essa
+ *
+ * Created on March 27, 2021, 12:05 PM
+ */
+/* section : includes */
+#include "project.h"
+#include "ECU_LAYER/LED/led.h"
+uint16 adc_res1,adc_res2,adc_res3,adc_res4;
+
+
+int main() {
+
+    std_ReturnType ret = E_NOT_Ok   ;
+    project_initialize();
+
+    while(1){
+        ret = ADC_Get_Conversion_Blocking(&adc_1 , ADC_CHANNEL_0 , &adc_res1);
+        if(adc_res1 >= 500){
+            ret = dc_motor_stop(&dc_motor_2);
+            ret = dc_motor_stop(&dc_motor_1);
+
+            ret = dc_motor_move_right(&dc_motor_1);
+            ret = dc_motor_move_right(&dc_motor_2);
+      
+        }
+        else if(adc_res1 < 500 && adc_res1 > 100){
+            ret = dc_motor_stop(&dc_motor_2);
+            ret = dc_motor_stop(&dc_motor_1);
+                      
+
+            ret = dc_motor_move_left(&dc_motor_2);
+            ret = dc_motor_move_left(&dc_motor_1);
+              
+
+        }
+        else {
+            ret = dc_motor_stop(&dc_motor_2);
+            ret = dc_motor_stop(&dc_motor_1);
+        
+             }
+      
+    }
+     
+
+    
+   
+     
+    return (EXIT_SUCCESS);
+    }
+void project_initialize(void){
+    
+    std_ReturnType ret = E_NOT_Ok   ;
+   mcal_layer_initialize();
+   ecu_layer_initialize();
+ 
+}
+
+
+

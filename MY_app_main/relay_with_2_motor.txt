@@ -1,0 +1,45 @@
+/* 
+ * File:   project.c
+ * Author: moham
+ *
+ * Created on March 27, 2021, 12:05 PM
+ */
+/* section : includes */
+#include "project.h"
+
+relay_t relay_1 = {.relay_port = PORTC_INDEX ,
+                    .relay_pin = GPIO_PIN0 ,
+                    .relay_status = RELAY_OFF_STATUS
+};
+relay_t relay_2 = {.relay_port = PORTC_INDEX ,
+                    .relay_pin = GPIO_PIN2 ,
+                    .relay_status = RELAY_OFF_STATUS
+};
+
+
+int main() {
+
+    std_ReturnType ret = E_NOT_Ok   ;
+    project_initialize();
+    
+    while(1){
+      ret = relay_turn_on(&relay_1);
+       ret = relay_turn_off(&relay_2);
+      __delay_ms(5000);
+            ret = relay_turn_off(&relay_1);
+             ret = relay_turn_on(&relay_2);
+  __delay_ms(5000);
+    }
+        
+
+    return (EXIT_SUCCESS);
+}
+void project_initialize(void){
+    
+    std_ReturnType ret = E_NOT_Ok   ;
+    ret = relay_initialization(&relay_1);
+     ret = relay_initialization(&relay_2);
+}
+
+
+

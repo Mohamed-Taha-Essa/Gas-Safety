@@ -1,0 +1,60 @@
+/* 
+ * File:   project.c
+ * Author: Mohamed Abdallah Essa
+ *
+ * Created on March 27, 2021, 12:05 PM
+ */
+/* section : includes */
+#include "project.h"
+#include "ECU_LAYER/LED/led.h"
+#include "MCAL_LAYER/USART/hal_USART.h"
+#define RECIEVE_REG (HWREG(0xFAEh))
+uint16 adc_res1,adc_res2,adc_res3,adc_res4 ;
+
+
+uint8 number= 0;
+uint8 data;
+
+int main() {
+
+    std_ReturnType ret = E_NOT_Ok   ;
+    project_initialize();
+ 
+   
+    while(1){
+        data = asynchronous_receive_data();
+            if (data == 0x04)
+        {
+        ret = led_on(&led_1);
+     
+         }
+        else if (data == 0x02)
+        {
+        ret = led_on(&led_2);
+             
+        }
+        if (data == 0x03)
+        {
+        ret = led_on(&led_3);
+               
+
+        }
+        else{
+              ret = led_on(&led_3);
+        }
+      
+    }
+ 
+     
+    return (EXIT_SUCCESS);
+    }
+void project_initialize(void){
+    
+    std_ReturnType ret = E_NOT_Ok   ;
+   mcal_layer_initialize();
+   ecu_layer_initialize();
+ 
+}
+
+
+

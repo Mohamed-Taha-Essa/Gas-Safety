@@ -1,0 +1,56 @@
+/* 
+ * File:   project.c
+ * Author: moham
+ *
+ * Created on March 27, 2021, 12:05 PM
+ */
+/* section : includes */
+#include "project.h"
+
+dc_motor_t dc_motor_1 ={
+  .dc_motor[0].Port = PORTC_INDEX,
+  .dc_motor[0].pin = GPIO_PIN0 ,
+  .dc_motor[0].logic = DC_MOTOR_OFF_STATUS ,
+  .dc_motor[0].direction = GPIO_DIRECTION_OUTPUT ,
+          
+  .dc_motor[1].Port = PORTC_INDEX,
+  .dc_motor[1].pin = GPIO_PIN1 ,
+  .dc_motor[1].logic = DC_MOTOR_OFF_STATUS ,
+  .dc_motor[1].direction = GPIO_DIRECTION_OUTPUT 
+};
+dc_motor_t dc_motor_2 ={
+  .dc_motor[0].Port = PORTC_INDEX,
+  .dc_motor[0].pin = GPIO_PIN2 ,
+  .dc_motor[0].logic = DC_MOTOR_OFF_STATUS ,
+  .dc_motor[0].direction = GPIO_DIRECTION_OUTPUT ,
+          
+  .dc_motor[1].Port = PORTC_INDEX,
+  .dc_motor[1].pin = GPIO_PIN3 ,
+  .dc_motor[1].logic = DC_MOTOR_OFF_STATUS ,
+  .dc_motor[1].direction = GPIO_DIRECTION_OUTPUT 
+};
+
+int main() {
+
+    std_ReturnType ret = E_NOT_Ok   ;
+    project_initialize();
+    
+    while(1){
+        
+        ret =  dc_motor_move_left(&dc_motor_1);
+        ret =  dc_motor_move_left(&dc_motor_2); 
+       
+    }
+        
+
+    return (EXIT_SUCCESS);
+}
+void project_initialize(void){
+    
+    std_ReturnType ret = E_NOT_Ok   ;
+    ret = dc_motor_initialize(&dc_motor_1);
+    ret =dc_motor_initialize(&dc_motor_2);
+
+}
+
+
